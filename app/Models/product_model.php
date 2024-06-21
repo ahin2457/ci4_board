@@ -23,6 +23,8 @@ class Product_model extends Model
 
         # 쿼리 join하기
         $builder->join('category','category_id = product_category_id','left');
+
+
         return $builder->get();
     }
 
@@ -45,5 +47,16 @@ class Product_model extends Model
         $query= $this->db->table('product')->delete(array('product_id'=>$id));
         return $query;
     }
+
+    # 페이징 처리를 위해 제품 테이블에 있는 총 제품 수를 가져오는 메서드
+    public function getProductCount()
+    {
+        # 'product' 테이블의 빌더 객체를 생성
+        $builder = $this->db->table('product');
+
+        # 'product' 테이블의 모든 행 수를 반환
+        return $builder->countAllResults();
+    }
+
     
 }

@@ -10,17 +10,34 @@ class Product extends Controller
     # product page
     public function getIndex()
     {
+        # product_model 클래스를 인스턴스화 하여 $model 변수에 할당
         $model = new Product_model();
+
+
+        # product_model 객체의 getProduct() 메서드 호출하여 제품 데이터를 가져오고,
+        # 이를 배열 $data의 'product' 키에 할당함
         $data['product']  = $model->getProduct()->getResult();
+        
+        # product_model 객체의 getCategory() 메소드를 호출하여 제품 데이터를 가져오고,
+        # 이를 배열 $data의 category 키에 할당함
         $data['category'] = $model->getCategory()->getResult();
+
+//        $data = [
+//                'pager' => $model->pager
+//        ];
+
+        # 'product_view' 뷰를 로드하고, $data 배열을 뷰에 전달하여 출력
         echo view('product_view',$data);
+
+
     }
 
     # 등록
     public function postSave()
     {
-        # model객체
+        # product_model 클래스를 인스턴스화 하여 $model 변수에 할당
         $model = new Product_model();
+
         # 데이터를 배열로 담기
         $data = array(
             'product_name'        => $this->request->getPost('product_name'),

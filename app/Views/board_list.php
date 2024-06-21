@@ -26,15 +26,24 @@
             </tr>
             </thead>
             <tbody id="board_list">
+            <?php
+                foreach($list as $ls){
+            ?>
             <tr>
-                <th scope="row">1</th>
-                <td>홍길동</td>
-                <td>게시판의 글</td>
-                <td>2022.10.26</td>
+                <th scope="row"><?php echo $ls->bid; ?></th>
+                <td><?php echo $ls->userid; ?></td>
+                <td><a href="/boardView/<?php echo $ls->bid; ?>"><?php echo $ls->subject; ?></a></td>
+                <td><?php echo $ls->regdate; ?> </td>
             </tr>
+            <?php
+
+                }
+            ?>
             </tbody>
         </table>
-
+        <p style="text-align:right;">
+            <a href="/boardWrite" ><button type="button" class="btn btn-primary">등록</button></a>
+        </p>
         <!-- Footer -->
     </div>
 </div>

@@ -14,6 +14,9 @@
     <table class="table table-striped">
         <thead>
         <tr>
+            <th scope="col">
+                <input type="checkbox" id="checkbox-all">
+            </th>
             <th>Product Name</th>
             <th>Price</th>
             <th>Category</th>
@@ -21,8 +24,11 @@
         </tr>
         </thead>
         <tbody>
-        <?php foreach($product as $row):?>
+        <?php
+            foreach($product as $row):
+                ?>
             <tr>
+                <td><input type="checkbox" name="checkList" value=""></td>
                 <td><?= $row->product_name;?></td>
                 <td><?= $row->product_price;?></td>
                 <td><?= $row->category_name;?></td>
@@ -31,11 +37,10 @@
                     <a href="#" class="btn btn-danger btn-sm btn-delete" data-id="<?= $row->product_id;?>">Delete</a>
                 </td>
             </tr>
-        <?php endforeach;?>
+        <?php endforeach; ?>
         </tbody>
     </table>
 
-</div>
 
 <!-- Modal Add Product-->
 <form action="/product/save" method="post">
@@ -186,6 +191,45 @@
             // Call Modal Edit
             $('#deleteModal').modal('show');
         });
+    });
+
+    $(document).ready(function(){
+
+        // 전체 체크박스 클릭 했을때
+        $("#checkbox-all").click(function(){
+            $("input[name='checkList']").prop("checked",this.checked);
+        });
+        
+        // 개별 체크박스 클릭 이벤트
+        $("input[name='checkList']").click(function () {
+
+            // 전체 체크박스 길이
+            let total = $("input[name='checkList']").length;
+
+            // 체크된 체크박스 길이
+            let checked = $("input[name='checkList']:checked").length;
+
+            // total === checked이면 전체 체크박스는 checked됨
+            $("#checkbox-all").prop("checked",total === checked);
+
+        });
+        
+        // '삭제' 버튼을 클릭했을 때 실행되는 함수
+        $("#delete-selected").click(function() {
+            
+            // 체크된 'checkList' 체크박스의 값을 배열로 가져옴
+            let checkedValues = $("input[name='checkList']:checked")
+                .map(function(){
+                    return this.value;
+                }).get();
+
+            //  하나 이상의 체크박스가 선택 되었는지 확인
+            if(checkedValues.length > 0){
+
+
+            }
+        });
+
     });
 </script>
 </body>

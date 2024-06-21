@@ -6,6 +6,12 @@ use CodeIgniter\Events\Events;
 use CodeIgniter\Exceptions\FrameworkException;
 use CodeIgniter\HotReloader\HotReloader;
 
+
+// 추가
+Events::on('post_controller_constructor', function() {
+    helper('render');
+});
+
 /*
  * --------------------------------------------------------------------
  * Application Events

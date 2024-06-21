@@ -7,6 +7,7 @@ use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Psr\Log\LoggerInterface;
+use App\Models\BoardModel;
 
 class Board extends BaseController
 {
@@ -16,10 +17,61 @@ class Board extends BaseController
         helper('alert');
     }
 
-    public function getIndex()
+    public function list()
     {
-        return view('board_list');
+//        $db = db_connect();
+//        $query = "select * from board order by bid desc";
+//        $rs = $db->query($query);
+//        $data['list']=$rs->getResult(); // 결과값 저장
+        $boardModel = new BoardModel();
+
+        // findA
+        $data['list'] = $boardModel->orderBy('bid','DESC')->findAll();
+
+        return render('board_list',$data); // view에 리턴
     }
+
+    public function write()
+    {
+        return render('board_write');
+    }
+
+    // $bid = null 파라미터 추가
+    // 만약 라우트에서 보내주는 값이 없으면 null임
+    // bid를 디비에 조회해서 값을 리턴해줌
+    public function view($bid = null)
+    {
+        $db = db_connect();
+        $query = "select * from board where bid=".$bid;
+        $rs = $db->query($query);
+        $data['view'] = $rs->getRow();
+
+
+        return render('board_view',$data);
+
+    }
+
+    // 등록 버튼
+    public function save()
+    {
+        $db = db_connect();
+
+        // view의 변수를 받아 db에 저장 하고 다시 리스트로 돌아가는 로직
+        $subject=$this->request->getVar('subject');
+        $content=$this->request->getVar('content');
+
+        $sql="insert into board (userid,subject,content) values ('test','".$subject."','".$content."')";
+        $rs = $db->query($sql);
+        return $this->response->redirect(site_url('/board'));
+    }
+
+
+//    public function getIndex()
+//    {
+//        return view('board_list');
+//    }
+
+
 
     // url
 //    public function reRoute()
