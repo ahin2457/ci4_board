@@ -19,3 +19,10 @@ $routes->get('/boardWrite', 'Board::write');
 $routes->get('/boardView/(:num)', 'Board::view/$1');
 
 $routes->match(['get','post'],'writeSave','Board::save');
+$routes->match(['get','post'],'/loginok','MemberController::loginok');
+
+
+// member
+$routes->get('/login', 'MemberController::login');
+$routes->get('/logout', 'MemberController::logout');
+$routes->match(['get', 'post'], '/loginok', 'MemberController::loginok');

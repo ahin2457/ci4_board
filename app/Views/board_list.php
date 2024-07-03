@@ -12,6 +12,16 @@
     <title></title>
 </head>
 <body>
+
+<!-- navbar start -->
+<?php
+    include('board_navbar.php');
+?>
+
+
+
+<!-- table 시작-->
+
 <div class="col-md-8" style="margin:auto;padding:20px;">
     <div class="wrap">
         <!-- Header -->
@@ -36,13 +46,23 @@
                 <td><?php echo $ls->regdate; ?> </td>
             </tr>
             <?php
-
                 }
             ?>
             </tbody>
         </table>
+
         <p style="text-align:right;">
             <a href="/boardWrite" ><button type="button" class="btn btn-primary">등록</button></a>
+
+            <?php
+                if(isset($_SESSION['userid'])){
+             ?>
+                <a href="/logout"><button type="button" class="btn btn-warning">로그아웃</button></a>
+            <?php
+                }else{
+            ?>
+                <a href="/login"><button type="button" class="btn btn-warning">로그인</button></a>
+            <?php } ?>
         </p>
         <!-- Footer -->
     </div>

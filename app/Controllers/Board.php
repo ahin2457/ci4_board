@@ -33,6 +33,11 @@ class Board extends BaseController
 
     public function write()
     {
+        if(!isset($_SESSION['userid'])){
+            echo "<script>alert('로그인하십시오.');location.href='/login'</script>";
+            exit;
+        }
+
         return render('board_write');
     }
 
@@ -54,6 +59,11 @@ class Board extends BaseController
     // 등록 버튼
     public function save()
     {
+        if(!isset($_SESSION['userid'])) {
+            echo "<script>alert('로그인 하십시오.');location.href='/login'</script>";
+            exit;
+        }
+
         $db = db_connect();
 
         // view의 변수를 받아 db에 저장 하고 다시 리스트로 돌아가는 로직
@@ -113,6 +123,7 @@ class Board extends BaseController
 
         return view('welcome_message');
     }
+
     public function Modify()
     {
         $did = $this->request->getGet('did');

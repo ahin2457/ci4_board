@@ -1,3 +1,7 @@
+<?php
+include('board_navbar.php');
+?>
+
 <h3 class="pb-4 mb-4 fst-italic border-bottom" style="text-align:center;">
     - 게시판 보기 -
 </h3>
